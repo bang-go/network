@@ -12,6 +12,7 @@ type Connect interface {
 	SendToUdp([]byte, *net.UDPAddr) error
 	Receive([]byte) error
 	ReceiveFromUdp([]byte) (*net.UDPAddr, error)
+	Conn() *net.UDPConn
 	SetTimeout(time.Duration)
 	Close()
 }
@@ -20,7 +21,6 @@ type connectEntity struct {
 	conn    *net.UDPConn
 	timeout time.Duration
 }
-
 
 func NewConnect(conn *net.UDPConn, opts ...opt.Option[connectOptions]) Connect {
 	options := &connectOptions{}
@@ -73,6 +73,11 @@ func (c *connectEntity) ReceiveFromUdp(data []byte) (udpAddr *net.UDPAddr, err e
 func (c *connectEntity) SetTimeout(timeout time.Duration) {
 	c.timeout = timeout
 }
+
+func (c *connectEntity) Conn() *net.UDPConn {
+	return c.conn
+}
+
 func (c *connectEntity) Close() {
 	_ = c.conn.Close()
 }

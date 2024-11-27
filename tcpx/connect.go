@@ -10,6 +10,7 @@ type Connect interface {
 	Send([]byte) error
 	Receive([]byte) error
 	SetTimeout(time.Duration)
+	Conn() net.Conn
 	Close()
 }
 
@@ -17,7 +18,6 @@ type connectEntity struct {
 	conn    net.Conn
 	timeout time.Duration
 }
-
 
 func NewConnect(conn net.Conn, opts ...opt.Option[connectOptions]) Connect {
 	options := &connectOptions{}
@@ -46,6 +46,11 @@ func (c *connectEntity) Receive(data []byte) (err error) {
 	_, err = c.conn.Read(data)
 	return
 }
+
+func (c *connectEntity) Conn() net.Conn {
+	return c.conn
+}
+
 func (c *connectEntity) SetTimeout(timeout time.Duration) {
 	c.timeout = timeout
 }
