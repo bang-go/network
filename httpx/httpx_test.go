@@ -18,7 +18,7 @@ func TestPost(t *testing.T) {
 			"token": "xxx",
 		},
 	}
-	client := httpx.New(httpx.Config{})
+	client := httpx.New(&httpx.Config{})
 	resp, err := client.Send(context.Background(), req)
 	if err != nil {
 		fmt.Println(err)

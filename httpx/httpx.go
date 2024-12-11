@@ -13,6 +13,18 @@ const (
 	ContentJson    = "Json"           //Json请求
 	DefaultTimeout = 30 * time.Second //默认请求时间
 )
+const ()
+const (
+	MethodGet     = http.MethodGet
+	MethodHead    = http.MethodHead
+	MethodPost    = http.MethodPost
+	MethodPut     = http.MethodPut
+	MethodPatch   = http.MethodPatch // RFC 5789
+	MethodDelete  = http.MethodDelete
+	MethodConnect = http.MethodConnect
+	MethodOptions = http.MethodOptions
+	MethodTrace   = http.MethodTrace
+)
 
 type Config struct {
 	Timeout time.Duration
@@ -24,10 +36,10 @@ type Client interface {
 }
 
 type clientEntity struct {
-	config Config
+	config *Config
 }
 
-func New(conf Config) Client {
+func New(conf *Config) Client {
 	return &clientEntity{
 		config: conf,
 	}
