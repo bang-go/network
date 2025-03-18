@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/alibaba/sentinel-golang v1.0.4
-	github.com/bang-go/micro v0.0.1
+	github.com/bang-go/micro v0.1.0
 	github.com/bang-go/opt v0.0.2
 	github.com/bang-go/util v0.1.1
 	github.com/gin-gonic/gin v1.10.0
@@ -18,7 +18,6 @@ require (
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
-	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/gin-contrib/sse v1.0.0 // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
