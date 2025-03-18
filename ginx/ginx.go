@@ -12,14 +12,14 @@ type Server interface {
 	Use(...gin.HandlerFunc)
 	Engine() *http.Server
 	GinEngine() *gin.Engine
-	Group(relativePath string, handlers ...gin.HandlerFunc) RouterGroup
+	Group(relativePath string, handlers ...gin.HandlerFunc) *gin.RouterGroup
 	Shutdown() error
 }
 
 type ServerConfig struct {
-	Addr        string
-	Mode        string
-	Trace       bool
+	Addr  string
+	Mode  string
+	Trace bool
 	//TraceFilter gintrace.Filter
 }
 type ServerEntity struct {
@@ -60,10 +60,8 @@ func (s *ServerEntity) Start() (err error) {
 	return
 }
 
-func (s *ServerEntity) Group(relativePath string, handlers ...gin.HandlerFunc) RouterGroup {
-	return &routerGroupEntity{
-		group: s.ginEngine.Group(relativePath, handlers...),
-	}
+func (s *ServerEntity) Group(relativePath string, handlers ...gin.HandlerFunc) *gin.RouterGroup {
+	return s.ginEngine.Group(relativePath, handlers...)
 }
 
 func (s *ServerEntity) Shutdown() error {
