@@ -23,13 +23,10 @@ github.com/aryann/difflib v0.0.0-20170710044230-e206f873d14a/go.mod h1:DAHtR1m6l
 github.com/aws/aws-lambda-go v1.13.3/go.mod h1:4UKl9IzQMoD+QF79YdCuzCwp8VbmG4VAQwij/eHl5CU=
 github.com/aws/aws-sdk-go v1.27.0/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/aws/aws-sdk-go-v2 v0.18.0/go.mod h1:JWVYvqSMppoMJC0x5wdwiImzgXTI9FuZwxzkQq9wy+g=
-github.com/bang-go/micro v0.1.6 h1:DDB0ML25/FUfMht52wx2ev7iyAxMXkvk8xjxpv5LiME=
-github.com/bang-go/micro v0.1.6/go.mod h1:jIqpnsdVO1e+gjdNMNNLONua3mZ75Kp2zeEJec3gqEc=
-github.com/bang-go/micro v0.1.7/go.mod h1:32BAjFyY8eSjAI8CTtwDB0zVKcd4N8LwGeJOcc0dFVI=
+github.com/bang-go/micro v0.1.9 h1:3S92rRrtQO27Oa3e4cptykRL/oOLAlT9mOkV2Pk/wtg=
+github.com/bang-go/micro v0.1.9/go.mod h1:sMi+5t+7330gn0bOLFNbsBYsIMfS6eSUrcgaeIVX7xw=
 github.com/bang-go/opt v0.0.2 h1:kuertp3O/YmrHeLHkNgHNJyNBuAHp7QUMr1gs6fNxfc=
 github.com/bang-go/opt v0.0.2/go.mod h1:KwqfP/1zbewrPjZFa6JWAf6O4fWH0YEiTrJgdOe9sLM=
-github.com/bang-go/util v0.1.3 h1:KdEnhekImWdVII8Z6kjMrC6AxUV1NB2y+I0iMIpoRkY=
-github.com/bang-go/util v0.1.3/go.mod h1:XI/0hMdPsqonirSSAPiJbXaX8mHvs9LOF+mpXTE8Hc8=
 github.com/bang-go/util v0.1.4 h1:gdAsjESOZKA9wr3Qikj5a8o8JI+tqBXpbPzjHBB0NPs=
 github.com/bang-go/util v0.1.4/go.mod h1:vDZz2Ep6xdbAoGvMT52CGFcdBRUGSHS1jMPCKcJ5bS0=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=

@@ -1,10 +1,11 @@
 package udpx
 
 import (
-	"github.com/bang-go/opt"
 	"log"
 	"net"
 	"time"
+
+	"github.com/bang-go/opt"
 )
 
 type Connect interface {

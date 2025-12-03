@@ -1,10 +1,11 @@
 package grpcx_test
 
 import (
-	"github.com/bang-go/network/grpcx"
-	"google.golang.org/grpc"
 	"log"
 	"testing"
+
+	"github.com/bang-go/network/grpcx"
+	"google.golang.org/grpc"
 )
 
 func TestServerStart(t *testing.T) {

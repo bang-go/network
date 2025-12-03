@@ -48,6 +48,9 @@ func (r *Request) getUrl() (us string, err error) {
 	}
 	urlValues := url.Values{}
 	httpUrl, err := url.Parse(r.Url)
+	if err != nil {
+		return
+	}
 	for key, value := range r.Params {
 		urlValues.Set(key, value)
 	}

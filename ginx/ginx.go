@@ -2,9 +2,10 @@ package ginx
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/bang-go/util"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 type Server interface {

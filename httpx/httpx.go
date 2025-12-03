@@ -2,9 +2,11 @@ package httpx
 
 import (
 	"context"
-	"github.com/bang-go/opt"
+	"io"
 	"net/http"
 	"time"
+
+	"github.com/bang-go/opt"
 )
 
 const (
@@ -13,7 +15,6 @@ const (
 	ContentJson    = "Json"           //Json请求
 	DefaultTimeout = 30 * time.Second //默认请求时间
 )
-const ()
 const (
 	MethodGet     = http.MethodGet
 	MethodHead    = http.MethodHead
@@ -77,7 +78,9 @@ func (c clientEntity) Send(ctx context.Context, req *Request, opts ...opt.Option
 	if httpRes, err = httpClient.Do(httpReq); err != nil {
 		return
 	}
-	defer httpRes.Body.Close()
+	defer func(Body io.ReadCloser) {
+		_ = Body.Close()
+	}(httpRes.Body)
 	endTime := time.Now()
 	elapsed := endTime.Sub(startTime).Seconds()
 	resp = req.packResponse(httpRes, elapsed)

@@ -1,9 +1,10 @@
 package tcpx
 
 import (
-	"github.com/bang-go/opt"
 	"net"
 	"time"
+
+	"github.com/bang-go/opt"
 )
 
 type Connect interface {

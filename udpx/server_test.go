@@ -1,11 +1,12 @@
 package udpx_test
 
 import (
-	"github.com/bang-go/network/udpx"
 	"log"
 	"net"
 	"testing"
 	"time"
+
+	"github.com/bang-go/network/udpx"
 )
 
 func TestServerStart(t *testing.T) {

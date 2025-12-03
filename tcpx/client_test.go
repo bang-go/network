@@ -1,10 +1,11 @@
 package tcpx_test
 
 import (
-	"github.com/bang-go/network/tcpx"
 	"log"
 	"testing"
 	"time"
+
+	"github.com/bang-go/network/tcpx"
 )
 
 func TestClientStart(t *testing.T) {

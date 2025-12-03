@@ -6,8 +6,9 @@ package metadatax
 import (
 	"context"
 	"encoding/base64"
-	grpcMetadata "google.golang.org/grpc/metadata"
 	"strings"
+
+	grpcMetadata "google.golang.org/grpc/metadata"
 )
 
 // MD is a convenience wrapper defining extra functions on the metadata.

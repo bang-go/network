@@ -1,12 +1,13 @@
 package server_interceptor_test
 
 import (
+	"testing"
+
 	"github.com/alibaba/sentinel-golang/core/circuitbreaker"
 	"github.com/alibaba/sentinel-golang/logging"
 	"github.com/bang-go/micro/throttle"
 	"github.com/bang-go/network/grpcx/server_interceptor"
 	"google.golang.org/grpc"
-	"testing"
 )
 
 func TestThrottleBreaker(t *testing.T) {

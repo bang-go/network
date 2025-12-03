@@ -1,8 +1,9 @@
 package tcpx
 
 import (
-	"github.com/bang-go/opt"
 	"time"
+
+	"github.com/bang-go/opt"
 )
 
 type connectOptions struct {

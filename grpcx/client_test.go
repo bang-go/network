@@ -1,9 +1,10 @@
 package grpcx_test
 
 import (
-	"github.com/bang-go/network/grpcx"
 	"log"
 	"testing"
+
+	"github.com/bang-go/network/grpcx"
 )
 
 func TestClientConn(t *testing.T) {

@@ -3,9 +3,10 @@ package httpx_test
 import (
 	"context"
 	"fmt"
-	"github.com/bang-go/network/httpx"
 	"net/http"
 	"testing"
+
+	"github.com/bang-go/network/httpx"
 )
 
 func TestPost(t *testing.T) {

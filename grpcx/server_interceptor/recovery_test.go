@@ -2,9 +2,10 @@ package server_interceptor_test
 
 import (
 	"context"
+	"testing"
+
 	"github.com/bang-go/network/grpcx/server_interceptor"
 	"google.golang.org/grpc"
-	"testing"
 )
 
 func TestRecovery(t *testing.T) {
