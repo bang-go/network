@@ -98,6 +98,9 @@ func (s *ServerEntity) Engine() *grpc.Server {
 }
 
 func (s *ServerEntity) Shutdown() error {
-	s.grpcServer.GracefulStop()
+	if s.grpcServer != nil {
+		s.grpcServer.GracefulStop()
+		s.grpcServer = nil
+	}
 	return nil
 }

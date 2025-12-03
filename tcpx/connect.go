@@ -59,5 +59,7 @@ func (c *connectEntity) calcDeadline() time.Time {
 	return time.Now().Add(c.timeout)
 }
 func (c *connectEntity) Close() {
-	_ = c.conn.Close()
+	if c.conn != nil {
+		_ = c.conn.Close()
+	}
 }

@@ -3,6 +3,7 @@ package ginx
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/bang-go/util"
 	"github.com/gin-gonic/gin"
@@ -66,7 +67,10 @@ func (s *ServerEntity) Group(relativePath string, handlers ...gin.HandlerFunc) *
 }
 
 func (s *ServerEntity) Shutdown() error {
-	//cxt, cancel := context.WithTimeout(context.Background(), graceful.MaxWaitTime)
-	//defer cancel()
-	return s.httpServer.Shutdown(context.Background())
+	if s.httpServer == nil {
+		return nil
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	return s.httpServer.Shutdown(ctx)
 }

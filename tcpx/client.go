@@ -6,7 +6,7 @@ import (
 )
 
 type Client interface {
-	Dail() (Connect, error)
+	Dial() (Connect, error)
 }
 
 type ClientConfig struct {
@@ -22,7 +22,7 @@ func NewClient(conf *ClientConfig) Client {
 	return &clientEntity{ClientConfig: conf}
 }
 
-func (s *clientEntity) Dail() (Connect, error) {
+func (s *clientEntity) Dial() (Connect, error) {
 	conn, err := net.Dial("tcp", s.Addr)
 	return NewConnect(conn, WithConnectTimeout(s.Timeout)), err
 }

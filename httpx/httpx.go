@@ -37,12 +37,20 @@ type Client interface {
 }
 
 type clientEntity struct {
-	config *Config
+	config     *Config
+	httpClient *http.Client
 }
 
 func New(conf *Config) Client {
+	httpClient := &http.Client{}
+	if conf != nil && conf.Timeout > 0 {
+		httpClient.Timeout = conf.Timeout
+	} else {
+		httpClient.Timeout = DefaultTimeout
+	}
 	return &clientEntity{
-		config: conf,
+		config:     conf,
+		httpClient: httpClient,
 	}
 }
 
@@ -70,12 +78,8 @@ func (c clientEntity) Send(ctx context.Context, req *Request, opts ...opt.Option
 	}
 	req.setCookie(httpReq) ////init cookie
 
-	httpClient := http.Client{}
-	if c.config.Timeout > 0 {
-		httpClient.Timeout = c.config.Timeout
-	}
 	startTime := time.Now()
-	if httpRes, err = httpClient.Do(httpReq); err != nil {
+	if httpRes, err = c.httpClient.Do(httpReq); err != nil {
 		return
 	}
 	defer func(Body io.ReadCloser) {

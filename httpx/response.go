@@ -26,10 +26,17 @@ func (r *Request) packResponse(res *http.Response, elapsed float64) (response *R
 		StatusCode: res.StatusCode,
 	}
 	response.Content, _ = io.ReadAll(res.Body)
-	response.Reason = strings.Split(res.Status, " ")[1]
+	// 安全解析状态码说明
+	statusParts := strings.SplitN(res.Status, " ", 2)
+	if len(statusParts) > 1 {
+		response.Reason = statusParts[1]
+	} else {
+		response.Reason = res.Status
+	}
 	response.Headers = map[string]string{}
 	response.Cookies = map[string]string{}
-	if res.StatusCode == http.StatusOK { //200 定义成功
+	// 2xx 状态码都视为成功
+	if res.StatusCode >= http.StatusOK && res.StatusCode < http.StatusMultipleChoices {
 		response.Success = true
 	}
 	for key, value := range res.Header {

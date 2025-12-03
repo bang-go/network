@@ -1,7 +1,6 @@
 package udpx
 
 import (
-	"log"
 	"net"
 	"time"
 
@@ -51,7 +50,6 @@ func (c *connectEntity) SendToUdp(data []byte, udpAddr *net.UDPAddr) (err error)
 }
 
 func (c *connectEntity) Receive(data []byte) (err error) {
-	log.Println(c.timeout)
 	if c.timeout > 0 {
 		if err = c.conn.SetReadDeadline(c.calcDeadline()); err != nil {
 			return
@@ -80,7 +78,9 @@ func (c *connectEntity) Conn() *net.UDPConn {
 }
 
 func (c *connectEntity) Close() {
-	_ = c.conn.Close()
+	if c.conn != nil {
+		_ = c.conn.Close()
+	}
 }
 func (c *connectEntity) calcDeadline() time.Time {
 	return time.Now().Add(c.timeout)

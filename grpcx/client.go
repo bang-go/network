@@ -1,6 +1,7 @@
 package grpcx
 
 import (
+	"sync"
 	"time"
 
 	"google.golang.org/grpc"
@@ -9,7 +10,7 @@ import (
 )
 
 type Client interface {
-	AddDailOptions(...grpc.DialOption)
+	AddDialOptions(...grpc.DialOption)
 	AddUnaryInterceptor(interceptor ...grpc.UnaryClientInterceptor)
 	AddStreamInterceptor(interceptor ...grpc.StreamClientInterceptor)
 	Dial() (*grpc.ClientConn, error)
@@ -39,6 +40,7 @@ type ClientEntity struct {
 	dialOptions        []grpc.DialOption
 	streamInterceptors []grpc.StreamClientInterceptor
 	unaryInterceptors  []grpc.UnaryClientInterceptor
+	mu                 sync.Mutex // 保护 conn 的并发访问
 }
 
 // TODO: metric, retry, load balance
@@ -53,6 +55,15 @@ func NewClient(conf *ClientConfig) Client {
 }
 
 func (c *ClientEntity) Dial() (conn *grpc.ClientConn, err error) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	// 如果连接已存在，直接返回（gRPC 会自动管理连接状态和重连）
+	if c.conn != nil {
+		return c.conn, nil
+	}
+
+	// 创建新连接
 	baseClientOption := []grpc.DialOption{grpc.WithKeepaliveParams(defaultClientKeepaliveParams)}
 	if !c.Secure {
 		baseClientOption = append(baseClientOption, grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -64,9 +75,8 @@ func (c *ClientEntity) Dial() (conn *grpc.ClientConn, err error) {
 	//	}
 	//	baseClientOption = append(baseClientOption, traceOption...)
 	//}
-	c.dialOptions = append(baseClientOption, c.dialOptions...)
-	options := append(c.dialOptions, grpc.WithChainUnaryInterceptor(c.unaryInterceptors...), grpc.WithChainStreamInterceptor(c.streamInterceptors...))
-	//c.conn, err = grpc.Dial(c.ClientConfig.Addr, options...)
+	options := append(baseClientOption, c.dialOptions...)
+	options = append(options, grpc.WithChainUnaryInterceptor(c.unaryInterceptors...), grpc.WithChainStreamInterceptor(c.streamInterceptors...))
 	c.conn, err = grpc.NewClient(c.ClientConfig.Addr, options...)
 	return c.conn, err
 }
@@ -80,13 +90,20 @@ func (c *ClientEntity) DialWithCall(call ClientCallFunc) (any, error) {
 }
 
 func (c *ClientEntity) Conn() *grpc.ClientConn {
+	// 只读操作，不需要加锁（Go 的指针读取是原子的）
 	return c.conn
 }
+
 func (c *ClientEntity) Close() {
-	_ = c.conn.Close()
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if c.conn != nil {
+		_ = c.conn.Close()
+		c.conn = nil
+	}
 }
 
-func (c *ClientEntity) AddDailOptions(dialOption ...grpc.DialOption) {
+func (c *ClientEntity) AddDialOptions(dialOption ...grpc.DialOption) {
 	c.dialOptions = append(c.dialOptions, dialOption...)
 }
 

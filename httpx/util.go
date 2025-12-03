@@ -14,8 +14,8 @@ func FormatFormData(data map[string]string) string {
 	return urlValues.Encode()
 }
 
-// FormatJsonData 格式化json数据
-func FormatJsonData(data map[string]string) string {
+// FormatJsonData 格式化json数据，支持任意类型
+func FormatJsonData(data interface{}) string {
 	byteBody, _ := json.Marshal(data)
 	return string(byteBody)
 }

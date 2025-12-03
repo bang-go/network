@@ -83,14 +83,18 @@ func (r *Request) getBody() *strings.Reader {
 	if r.Headers == nil {
 		r.Headers = map[string]string{}
 	}
-	switch r.ContentType {
-	case ContentRaw:
-	case ContentForm:
-		r.Headers["Content-Type"] = "application/x-www-form-urlencoded"
-	case ContentJson:
-		r.Headers["Content-Type"] = "application/json"
-	default: //默认json
-		r.Headers["Content-Type"] = "application/json"
+	// 只有在有请求体时才设置 Content-Type
+	if r.Body != "" {
+		switch r.ContentType {
+		case ContentRaw:
+			// Raw 类型不设置 Content-Type，由用户自行设置
+		case ContentForm:
+			r.Headers["Content-Type"] = "application/x-www-form-urlencoded"
+		case ContentJson:
+			r.Headers["Content-Type"] = "application/json"
+		default: //默认json
+			r.Headers["Content-Type"] = "application/json"
+		}
 	}
 	return strings.NewReader(r.Body)
 }

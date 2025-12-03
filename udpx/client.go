@@ -6,7 +6,7 @@ import (
 )
 
 type Client interface {
-	Dail() (Connect, error)
+	Dial() (Connect, error)
 }
 
 type ClientConfig struct {
@@ -22,8 +22,11 @@ func NewClient(conf *ClientConfig) Client {
 	return &clientEntity{ClientConfig: conf}
 }
 
-func (s *clientEntity) Dail() (Connect, error) {
-	updAddr, _ := net.ResolveUDPAddr("udp", s.Addr)
-	conn, err := net.DialUDP("udp", nil, updAddr)
+func (s *clientEntity) Dial() (Connect, error) {
+	udpAddr, err := net.ResolveUDPAddr("udp", s.Addr)
+	if err != nil {
+		return nil, err
+	}
+	conn, err := net.DialUDP("udp", nil, udpAddr)
 	return NewConnect(conn, WithConnectTimeout(s.Timeout)), err
 }
